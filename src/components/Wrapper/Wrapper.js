@@ -1,13 +1,18 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const MainContent = styled.main`
+  margin-top: 16px;
+`;
 
 const Wrapper = (props) => (
   <React.Fragment>
     <div>
       Toobar, SideDrawer, Bckdrop
     </div>
-    <main>
+    <MainContent>
       { props.children }
-    </main>
+    </MainContent>
   </React.Fragment>
 );
 
