@@ -47,6 +47,7 @@ const BuildControl = (props) => (
   <DivBuildControl>
     <DivLabel>{props.label}</DivLabel>
     <ButtonLess
+      disabled = {props.disabled}
       onClick = {() => { props.decreaseIngredient(props.type) }}
     >Less</ButtonLess>
     <ButtonMore

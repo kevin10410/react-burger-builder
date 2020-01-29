@@ -25,6 +25,7 @@ const BuildControls = (props) => (
     {
       controls.map(ctrl =>
         <BuildControl
+          disabled = { props.disabledIngredients.includes(ctrl.type) }
           key = {ctrl.label}
           label = {ctrl.label}
           type = {ctrl.type}
