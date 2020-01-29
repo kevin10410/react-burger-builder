@@ -8,7 +8,7 @@ const DivBurger = styled.div`
   height: 250px;
   overflow-y: auto;
   text-align: center;
-  font-weight: bold:
+  font-weight: bold;
   font-size: 12rem;
 
   @media (min-width: 500px) and (min-height: 400px) {
@@ -27,16 +27,29 @@ const DivBurger = styled.div`
   }
 `;
 
+const PHint = styled.p`
+  font-size: initial;
+`;
+
 const Burger = (props) => {
-
-
+  const IngredientLayers = Object.keys(props.ingredients)
+    .map(ingredient => [...Array(props.ingredients[ingredient])]
+      .map((layer, index) =>
+        <BurgerIngredient
+          type = { ingredient }
+          key = { ingredient + index }
+        />
+      ))
+    .reduce((totalLayers, ingredientLayers) => {
+      return totalLayers.concat(ingredientLayers);
+    }, []);
   return (
     <DivBurger className="burger">
       <BurgerIngredient type="breadTop"/>
-      <BurgerIngredient type="salad"/>
-      <BurgerIngredient type="bacon"/>
-      <BurgerIngredient type="cheese"/>
-      <BurgerIngredient type="meat"/>
+      { IngredientLayers.length === 0
+          ? <PHint>Please Start Adding Ingredients!</PHint>
+          : IngredientLayers
+      }
       <BurgerIngredient type="breadBottom"/>
     </DivBurger>
   );
