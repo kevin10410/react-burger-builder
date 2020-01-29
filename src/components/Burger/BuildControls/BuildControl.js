@@ -46,8 +46,12 @@ const ButtonMore = styled(ButtonBasic)`
 const BuildControl = (props) => (
   <DivBuildControl>
     <DivLabel>{props.label}</DivLabel>
-    <ButtonLess>Less</ButtonLess>
-    <ButtonMore>More</ButtonMore>
+    <ButtonLess
+      onClick = {() => { props.decreaseIngredient(props.type) }}
+    >Less</ButtonLess>
+    <ButtonMore
+      onClick = {() => { props.increaseIngredient(props.type) }}
+    >More</ButtonMore>
   </DivBuildControl>
 );
 

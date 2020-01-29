@@ -14,10 +14,10 @@ const DivBuildControls = styled.div`
 `;
 
 const controls = [
+  { label: 'Salad', type: 'salad' },
   { label: 'Bacon', type: 'bacon' },
   { label: 'Cheese', type: 'cheese' },
   { label: 'Meat', type: 'meat' },
-  { label: 'Salad', type: 'salad' },
 ];
 
 const BuildControls = (props) => (
@@ -27,6 +27,9 @@ const BuildControls = (props) => (
         <BuildControl
           key = {ctrl.label}
           label = {ctrl.label}
+          type = {ctrl.type}
+          increaseIngredient = { props.increaseIngredient }
+          decreaseIngredient = { props.decreaseIngredient }
         />
       )
     }
