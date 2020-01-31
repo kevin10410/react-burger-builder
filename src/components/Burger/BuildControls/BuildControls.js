@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import BuildControl from './BuildControl';
+import OrderButton from './OrderButton';
 
 const DivBuildControls = styled.div`
   width: 100%;
@@ -35,6 +36,10 @@ const BuildControls = (props) => (
         />
       )
     }
+    <OrderButton
+      purchase = { props.purchase }
+      disabled = { props.purchasable === false }
+    />
   </DivBuildControls>
 );
 
