@@ -21,6 +21,7 @@ const OrderSumary = (props) => (
           )
       }
     </ul>
+    <p><strong>Total Price: { props.totalPrice.toFixed(2) }</strong></p>
     <p>Continue to Checkout?</p>
     <ButtonDanger
       onClick = { () => { props.cancelPurchase() } }
