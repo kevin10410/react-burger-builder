@@ -29,7 +29,7 @@ const DivModal = styled.div`
 const Modal = (props) => (
   <React.Fragment>
     <Backdrop
-      cancelPurchase = { props.cancelPurchase }
+      cancel = { props.cancelPurchase }
       show = { props.show }/>
     <DivModal
       show = { props.show }
