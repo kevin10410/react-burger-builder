@@ -14,7 +14,7 @@ const DivBackdrop = styled.div`
 const Backdrop = (props) => (
   props.show &&
   <DivBackdrop
-    onClick = { () => { props.cancelPurchase() } }
+    onClick = { () => { props.cancel() } }
   />
 );
 
