@@ -28,10 +28,10 @@ const CheckoutSummary = (props) => (
       />
     </DivBurgerWrapper>
     <ButtonDanger
-      onClick = { () => {} }
+      onClick = { () => { props.checkoutCancel(); } }
     >CANCEL</ButtonDanger>
     <ButtonSuccess
-      onClick = { () => {} }
+      onClick = { () => { props.checkoutContinue(); } }
     >CONTINUE</ButtonSuccess>
   </DivCheckoutSummary>
 );

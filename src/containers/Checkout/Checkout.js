@@ -1,7 +1,9 @@
 import React , { Component } from 'react';
 import styled from 'styled-components';
+import { Route } from 'react-router-dom';
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary';
+import ContactData from '../../components/Order/ContactData';
 
 const DivCheckout = styled.div`
 `;
@@ -15,6 +17,15 @@ class Checkout extends Component {
       bacon: 0,
     },
   };
+
+  checkoutCanceledHandler = () => {
+    this.props.history.goBack();
+  }
+
+  checkoutContinuedHandler = () => {
+    this.props.history
+      .replace('./checkout/contact-data');
+  }
 
   getIngredientsFromURLQuery = (queryString) => {
     const paramValuePairs = Array
@@ -45,7 +56,13 @@ class Checkout extends Component {
     return (
       <DivCheckout>
         <CheckoutSummary
+          checkoutContinue = { this.checkoutContinuedHandler }
+          checkoutCancel = { this.checkoutCanceledHandler }
           ingredients = { this.state.ingredients }
+        />
+        <Route
+          path = "/checkout/contact-data"
+          component = { ContactData }
         />
       </DivCheckout>
     )
