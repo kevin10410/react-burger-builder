@@ -9,12 +9,37 @@ const DivCheckout = styled.div`
 class Checkout extends Component {
   state = {
     ingredients: {
-      salad: 1,
-      meat: 1,
-      cheese: 1,
-      bacon: 1,
+      salad: 0,
+      meat: 0,
+      cheese: 0,
+      bacon: 0,
     },
   };
+
+  getIngredientsFromURLQuery = (queryString) => {
+    const paramValuePairs = Array
+      .from(new URLSearchParams(queryString).entries());
+
+    return paramValuePairs
+      .reduce((acc, [ key, value ]) => {
+        acc[key] = parseInt(value, 10);
+        return acc;
+      },
+      {
+        salad: 0,
+        meat: 0,
+        cheese: 0,
+        bacon: 0,
+      },
+    );
+  }
+
+  componentDidMount() {
+    const { search } = this.props.location;
+    const ingredients = this.getIngredientsFromURLQuery(search);
+
+    this.setState({ ingredients });
+  }
 
   render() {
     return (
