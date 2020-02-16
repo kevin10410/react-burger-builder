@@ -62,7 +62,11 @@ class Checkout extends Component {
         />
         <Route
           path = "/checkout/contact-data"
-          component = { ContactData }
+          render = {() => (
+            <ContactData
+              ingredients = { this.state.ingredients }
+            />
+          )}
         />
       </DivCheckout>
     )
