@@ -1,6 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
+import mockPosts from './mockPosts';
+
 class AxiosMocker {
   constructor() {
     this.mock = new MockAdapter(axios, { delayResponse: 200 });
@@ -28,6 +30,11 @@ class AxiosMocker {
 
   mockDeleteRequest() {
 
+  };
+
+  mockGetOrders() {
+    this.mock.onGet('/order')
+      .reply(200, mockPosts);
   };
 
   mockPostOrder() {
