@@ -19,7 +19,7 @@ class AxiosMocker {
   };
 
   mockPostRequest() {
-
+    this.mockPostOrder();
   };
 
   mockUpdateRequest() {
@@ -28,6 +28,11 @@ class AxiosMocker {
 
   mockDeleteRequest() {
 
+  };
+
+  mockPostOrder() {
+    this.mock.onPost('/order')
+      .reply((config) => [200, config.data]);
   };
 };
 
