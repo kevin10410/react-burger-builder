@@ -4,6 +4,8 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary';
 
+import { postOrder } from '../../api/orderService';
+
 const priceDict = {
   salad: 0.5,
   cheese: 0.4,
@@ -62,16 +64,33 @@ class BurgerBuilder extends Component {
     this.setState({ purchasable });
   };
 
-  purchaseHandler = () => {
-    const { ingredients } = this.state;
-    const paramsString = Object.keys(ingredients)
-      .map(ingredient => `${encodeURIComponent(ingredient)}=${encodeURIComponent(ingredients[ingredient])}`)
-      .join('&');
+  purchaseHandler = async () => {
+    try {
+      await postOrder({
+        ...this.state.ingredients,
+        price: this.state.totalPrice.toFixed(2),
+        customer: {
+          name: '',
+          address: '',
+          email: '',
+          zipCode: '',
+        },
+      })
+        .then(res => {
+          console.log(res.data);
+          const { ingredients } = this.state;
+          const paramsString = Object.keys(ingredients)
+            .map(ingredient => `${encodeURIComponent(ingredient)}=${encodeURIComponent(ingredients[ingredient])}`)
+            .join('&');
 
-    this.props.history.push({
-      pathname: '/checkout',
-      search: `?${paramsString}`,
-    });
+          this.props.history.push({
+            pathname: '/checkout',
+            search: `?${paramsString}`,
+          });
+        });
+    } catch(err) {
+      alert(err);
+    }
   };
 
   purchaseCancelHandler = () => {
