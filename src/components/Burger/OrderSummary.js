@@ -26,7 +26,9 @@ const OrderSumary = (props) => (
     <ButtonDanger
       onClick = { () => { props.cancelPurchase() } }
     >CANCEL</ButtonDanger>
-    <ButtonSuccess>CONTINUE</ButtonSuccess>
+    <ButtonSuccess
+      onClick = { () => { props.continuePurchase() }}
+    >CONTINUE</ButtonSuccess>
   </React.Fragment>
 );
 
