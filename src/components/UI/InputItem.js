@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const DivInputItem = styled.div`
   width: 100%;
@@ -13,7 +13,7 @@ const Label = styled.label`
   margin-bottom: 8px;
 `;
 
-const InputStyle = styled.input`
+const InputCSS = css`
   width: 100%;
   outline: none;
   border: 1px solid #ccc;
@@ -28,16 +28,62 @@ const InputStyle = styled.input`
   }
 `;
 
-const InputElement = styled(InputStyle)``;
-const TextareaElement = styled(InputStyle)``;
+const InputElement = styled.input`
+  ${ InputCSS }
+`;
+const TextareaElement = styled.textarea`
+  ${ InputCSS }
+`;
+const SelectElement = styled.select`
+  ${ InputCSS }
+`;
+
+const generateTextareaFromProps = (props) => (
+  <TextareaElement
+    value = { props.value }
+    placeholder = { props.elementConfig.placeholder }
+  />
+);
+
+const generateInputFromProps = (props) => (
+  <InputElement
+    type = { props.type }
+    value = { props.value }
+    placeholder = { props.elementConfig.placeholder }
+  />
+);
+
+const generateSelectFromProps = (props) => (
+  <SelectElement
+    value = { props.value }>
+    {
+      props.elementConfig.options
+        .map(option =>
+          <option
+            key = { option.value }
+            value = { option.value }>
+            { option.display }
+          </option>
+        )
+    }
+  </SelectElement>
+);
+
+
+const generateElementFromProps = (props) => {
+  if (props.elementType === 'textarea') {
+    return generateTextareaFromProps(props);
+  } else if (props.elementType === 'select') {
+    return generateSelectFromProps(props);
+  }
+  return generateInputFromProps(props);
+}
 
 const InputItem = (props) => (
   <DivInputItem>
     <Label>{ props.label }</Label>
     {
-      props.type === 'textarea'
-        ? <InputElement {...props}/>
-        : <TextareaElement {...props}/>
+      generateElementFromProps(props)
     }
   </DivInputItem>
 );

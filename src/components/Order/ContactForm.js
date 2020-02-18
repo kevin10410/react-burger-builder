@@ -15,9 +15,8 @@ const ContactForm = (props) => (
         props.orderForm && Object.entries(props.orderForm)
           .map(([key, value]) => (
             <InputItem
-              name = { key }
-              type = { value.elementConfig.type }
-              placeholder = { value.elementConfig.placeholder }
+              elementType = { value.elementType }
+              elementConfig = { value.elementConfig }
               value = { value.value }
             />
           ))
