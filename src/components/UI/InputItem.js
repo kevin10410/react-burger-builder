@@ -42,6 +42,7 @@ const generateTextareaFromProps = (props) => (
   <TextareaElement
     value = { props.value }
     placeholder = { props.elementConfig.placeholder }
+    onChange = { (event) => props.changeHandler(event, props.id) }
   />
 );
 
@@ -50,12 +51,15 @@ const generateInputFromProps = (props) => (
     type = { props.type }
     value = { props.value }
     placeholder = { props.elementConfig.placeholder }
+    onChange = { (event) => props.changeHandler(event, props.id) }
   />
 );
 
 const generateSelectFromProps = (props) => (
   <SelectElement
-    value = { props.value }>
+    value = { props.value }
+    onChange = { (event) => props.changeHandler(event, props.id) }
+  >
     {
       props.elementConfig.options
         .map(option =>
