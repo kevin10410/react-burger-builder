@@ -5,8 +5,6 @@ import Modal from '../../components/UI/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary';
 import Spinner from '../../components/UI/Spinner';
 
-import { postOrder } from '../../api/orderService';
-
 const priceDict = {
   salad: 0.5,
   cheese: 0.4,
@@ -55,7 +53,8 @@ class BurgerBuilder extends Component {
         const ingredientAmount = ingredients[ingredient];
         const ingredientPrice = priceDict[ingredient];
         return total + ingredientAmount * ingredientPrice;
-      }, 0);
+      }, 0)
+      .toFixed(2);
     this.setState({ totalPrice });
   };
 
@@ -66,45 +65,24 @@ class BurgerBuilder extends Component {
     this.setState({ purchasable });
   };
 
-  purchaseHandler = async () => {
+  purchaseHandler = () => {
     this.setState({ purchasing: true });
   };
 
-  purchaseContinueHandler = async () => {
-    this.setState({ loading: true });
-    try {
-      await postOrder({
-        ...this.state.ingredients,
-        price: this.state.totalPrice.toFixed(2),
-        customer: {
-          name: '',
-          address: '',
-          email: '',
-          zipCode: '',
-        },
-      })
-        .then(() => {
-          this.setState({
-            loading: false,
-            purchasing: false,
-          });
-          const { ingredients } = this.state;
-          const paramsString = Object.keys(ingredients)
-            .map(ingredient => `${encodeURIComponent(ingredient)}=${encodeURIComponent(ingredients[ingredient])}`)
-            .join('&');
-
-          this.props.history.push({
-            pathname: '/checkout',
-            search: `?${paramsString}`,
-          });
-        });
-    } catch(err) {
-      this.setState({
-        loading: false,
-        purchasing: false,
-      });
-      alert(err);
+  purchaseContinueHandler = () => {
+    const { ingredients, totalPrice } = this.state;
+    const payload = {
+      ...ingredients,
+      price: totalPrice,
     }
+    const paramsString = Object.keys(payload)
+      .map(param => `${encodeURIComponent(param)}=${payload[param]}`)
+      .join('&');
+
+    this.props.history.push({
+      pathname: '/checkout',
+      search: `?${paramsString}`,
+    });
   }
 
   purchaseCancelHandler = () => {
