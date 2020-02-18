@@ -17,7 +17,7 @@ class AxiosMocker {
   };
 
   mockGetRequest() {
-
+    this.mockGetOrders();
   };
 
   mockPostRequest() {
