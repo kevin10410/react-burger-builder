@@ -1,32 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import InputItem from '../UI/InputItem';
 import { ButtonSuccess } from '../../component-style/ButtonStyle';
 
 
 const DivContactForm = styled.div``;
 
-const Input = styled.input`
-  display: block;
-`;
-
 const ContactForm = (props) => (
   <DivContactForm>
     <h4>Enter your Contact Data</h4>
     <form>
-      <Input type="text"
+      <InputItem type="text"
         name="name"
         placeholder="Your name"
       />
-      <Input type="text"
+      <InputItem type="text"
         name="email"
         placeholder="Your email"
       />
-      <Input type="text"
+      <InputItem type="text"
         name="street"
         placeholder="Street"
       />
-      <Input type="text"
+      <InputItem type="text"
         name="postal"
         placeholder="Postal Code"
       />
