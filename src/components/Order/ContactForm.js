@@ -15,9 +15,12 @@ const ContactForm = (props) => (
         props.orderForm && Object.entries(props.orderForm)
           .map(([key, value]) => (
             <InputItem
+              id = { key }
+              key = { key }
               elementType = { value.elementType }
               elementConfig = { value.elementConfig }
               value = { value.value }
+              changeHandler = { props.changeHandler }
             />
           ))
       }
