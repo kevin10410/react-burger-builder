@@ -16,6 +16,7 @@ class Checkout extends Component {
       cheese: 0,
       bacon: 0,
     },
+    price: 0,
   };
 
   checkoutCanceledHandler = () => {
@@ -28,28 +29,33 @@ class Checkout extends Component {
   }
 
   getIngredientsFromURLQuery = (queryString) => {
+    const { ingredients } = this.state;
     const paramValuePairs = Array
       .from(new URLSearchParams(queryString).entries());
 
     return paramValuePairs
+      .filter(([key, value]) => key in ingredients)
       .reduce((acc, [ key, value ]) => {
         acc[key] = parseInt(value, 10);
         return acc;
       },
-      {
-        salad: 0,
-        meat: 0,
-        cheese: 0,
-        bacon: 0,
-      },
+      ingredients,
+    );
+  }
+
+  getPriceFromURLQuery = (queryString) => {
+    return parseFloat(
+      new URLSearchParams(queryString)
+        .get('price')
     );
   }
 
   componentDidMount() {
     const { search } = this.props.location;
     const ingredients = this.getIngredientsFromURLQuery(search);
+    const price = this.getPriceFromURLQuery(search);
 
-    this.setState({ ingredients });
+    this.setState({ ingredients, price });
   }
 
   render() {
@@ -62,9 +68,11 @@ class Checkout extends Component {
         />
         <Route
           path = "/checkout/contact-data"
-          render = {() => (
+          render = {(routeProps) => (
             <ContactData
+              { ...routeProps }
               ingredients = { this.state.ingredients }
+              price = { this.state.price }
             />
           )}
         />

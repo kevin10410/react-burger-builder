@@ -3,6 +3,7 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary';
+import Spinner from '../../components/UI/Spinner';
 
 const priceDict = {
   salad: 0.5,
@@ -22,6 +23,7 @@ class BurgerBuilder extends Component {
     totalPrice: 0,
     purchasable: false,
     purchasing: false,
+    loading: false,
   };
 
   increaseIngredientHandler = (ingredient) => {
@@ -51,7 +53,8 @@ class BurgerBuilder extends Component {
         const ingredientAmount = ingredients[ingredient];
         const ingredientPrice = priceDict[ingredient];
         return total + ingredientAmount * ingredientPrice;
-      }, 0);
+      }, 0)
+      .toFixed(2);
     this.setState({ totalPrice });
   };
 
@@ -63,16 +66,24 @@ class BurgerBuilder extends Component {
   };
 
   purchaseHandler = () => {
-    const { ingredients } = this.state;
-    const paramsString = Object.keys(ingredients)
-      .map(ingredient => `${encodeURIComponent(ingredient)}=${encodeURIComponent(ingredients[ingredient])}`)
+    this.setState({ purchasing: true });
+  };
+
+  purchaseContinueHandler = () => {
+    const { ingredients, totalPrice } = this.state;
+    const payload = {
+      ...ingredients,
+      price: totalPrice,
+    }
+    const paramsString = Object.keys(payload)
+      .map(param => `${encodeURIComponent(param)}=${payload[param]}`)
       .join('&');
 
     this.props.history.push({
       pathname: '/checkout',
       search: `?${paramsString}`,
     });
-  };
+  }
 
   purchaseCancelHandler = () => {
     this.setState({ purchasing: false });
@@ -88,11 +99,16 @@ class BurgerBuilder extends Component {
         <Modal
           cancelPurchase = { this.purchaseCancelHandler }
           show = { this.state.purchasing }>
-          <OrderSummary
-            totalPrice = { this.state.totalPrice }
-            cancelPurchase = { this.purchaseCancelHandler }
-            ingredients = { this.state.ingredients }
-          />
+          {
+            this.state.loading
+              ? <Spinner/>
+              : <OrderSummary
+                  totalPrice = { this.state.totalPrice }
+                  cancelPurchase = { this.purchaseCancelHandler }
+                  continuePurchase = { this.purchaseContinueHandler }
+                  ingredients = { this.state.ingredients }
+                />
+          }
         </Modal>
         <Burger ingredients = {this.state.ingredients}/>
         <BuildControls
