@@ -72,15 +72,17 @@ class ContactData extends Component {
     event.preventDefault();
     this.setState({ loading: true });
     const { ingredients, price } = this.props;
+    const { orderForm } = this.state;
     try {
       await postOrder({
         ingredients,
         price,
         customer: {
-          name: '',
-          address: '',
-          email: '',
-          zipCode: '',
+          name: orderForm.name.value,
+          address: orderForm.address.value,
+          email: orderForm.email.value,
+          zipCode: orderForm.zipCode.value,
+          delivery: orderForm.delivery.value,
         },
       })
         .then((res) => {
