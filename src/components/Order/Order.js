@@ -10,11 +10,34 @@ const DivOrder = styled.div`
   box-sizing: border-box;
 `;
 
+const SpanIngredient = styled.span`
+  display: inline-block;
+  text-transform: capitalize;
+  margin: 0 8px;
+  border: 1px solid #ccdc;
+  padding: 5px;
+`;
+
 const Order = (props) => (
   <DivOrder>
-    <p>Ingredients: Salad (1)</p>
+    {
+      props.ingredients &&
+      <p>
+        Ingredients:
+        {
+          Object.keys(props.ingredients)
+            .filter(ingredient => props.ingredients[ingredient])
+            .map(ingredient => (
+              <SpanIngredient
+                key = { ingredient }
+              >{`${ingredient} (${props.ingredients[ingredient]})`}
+              </SpanIngredient>
+            ))
+        }
+      </p>
+    }
     <p>Price: 
-      <strong>USD 5.45</strong>
+      <strong>{ props.price }</strong>
     </p>
   </DivOrder>
 );
