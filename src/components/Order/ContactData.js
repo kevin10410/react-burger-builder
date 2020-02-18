@@ -21,12 +21,51 @@ const DivContactData = styled.div`
 
 class ContactData extends Component {
   state = {
-    name: '',
-    email: '',
-    address: {
-      street: '',
-      postalCode: '',
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+      },
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail',
+        },
+        value: '',
+      },
+      address: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Address',
+        },
+        value: '',
+      },
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'ZIP Code',
+        },
+        value: '',
+      },
+      delivery: {
+        elementType: 'select',
+        elementConfig: {
+          options: [
+            { display:'Mail', value: 'mail' },
+            { display:'Express', value: 'express' },
+          ],
+        },
+        value: '',
+      },
     },
+    loading: false,
   }
 
   orderHandler = async (event) => {
@@ -64,6 +103,7 @@ class ContactData extends Component {
           this.state.loading
             ? <Spinner/>
             : <ContactForm
+                orderForm = { this.state.orderForm }
                 postOrder = { this.orderHandler }
               />
         }
