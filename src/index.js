@@ -4,6 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import AxiosMocker from './mocker/AxiosMocker';
+
+const axiosMocker = new AxiosMocker();
+axiosMocker.init();
 
 const app = (
   <BrowserRouter>
