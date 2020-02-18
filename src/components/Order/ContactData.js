@@ -66,7 +66,7 @@ class ContactData extends Component {
       },
     },
     loading: false,
-  }
+  };
 
   orderHandler = async (event) => {
     event.preventDefault();
@@ -94,7 +94,20 @@ class ContactData extends Component {
       });
       alert(err);
     }
-  }
+  };
+
+  formInputHandler = (event, inputItem) => {
+    const updatedForm = { ...this.state.orderForm };
+    const updateItem = { ...updatedForm[inputItem] };
+    const { value } = event.target;
+
+    updatedForm[inputItem] = {
+      ...updateItem,
+    };
+    updatedForm[inputItem].value = value;
+
+    this.setState({ orderForm: updatedForm });
+  };
   
   render() {
     return (
@@ -105,6 +118,7 @@ class ContactData extends Component {
             : <ContactForm
                 orderForm = { this.state.orderForm }
                 postOrder = { this.orderHandler }
+                changeHandler = { this.formInputHandler }
               />
         }
       </DivContactData>
