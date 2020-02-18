@@ -11,22 +11,17 @@ const ContactForm = (props) => (
   <DivContactForm>
     <h4>Enter your Contact Data</h4>
     <form>
-      <InputItem type="text"
-        name="name"
-        placeholder="Your name"
-      />
-      <InputItem type="text"
-        name="email"
-        placeholder="Your email"
-      />
-      <InputItem type="text"
-        name="street"
-        placeholder="Street"
-      />
-      <InputItem type="text"
-        name="postal"
-        placeholder="Postal Code"
-      />
+      {
+        props.orderForm && Object.entries(props.orderForm)
+          .map(([key, value]) => (
+            <InputItem
+              name = { key }
+              type = { value.elementConfig.type }
+              placeholder = { value.elementConfig.placeholder }
+              value = { value.value }
+            />
+          ))
+      }
       <ButtonSuccess
         onClick = { (event) => { props.postOrder(event) } }
       >Order</ButtonSuccess>
