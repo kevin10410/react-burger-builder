@@ -24,8 +24,8 @@ const NavigationList = (props) => (
       link = "/"
     >Burger Builder</NavigationItem>
     <NavigationItem
-      link = "/checkout"
-    >Checkout</NavigationItem>
+      link = "/orders"
+    >Orders</NavigationItem>
   </UlNavigationList>
 );
 
