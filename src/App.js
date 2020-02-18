@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Wrapper from './components/Wrapper/Wrapper';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Checkout from './containers/Checkout/Checkout';
+import Order from './components/Orders';
 
 class App extends Component {
   render() {
@@ -18,6 +19,10 @@ class App extends Component {
           <Route
             path="/checkout" 
             component={ Checkout }
+          />
+          <Route
+            path="/orders"
+            component={ Order }
           />
         </Switch>
       </Wrapper>
