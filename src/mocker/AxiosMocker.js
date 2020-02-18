@@ -5,7 +5,7 @@ import mockPosts from './mockPosts';
 
 class AxiosMocker {
   constructor() {
-    this.mock = new MockAdapter(axios, { delayResponse: 200 });
+    this.mock = new MockAdapter(axios, { delayResponse: 500 });
   };
 
   init() {
