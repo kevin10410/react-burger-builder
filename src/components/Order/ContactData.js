@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { ButtonSuccess } from '../../component-style/ButtonStyle';
+import Spinner from '../UI/Spinner';
+import ContactForm from './ContactForm';
+import { postOrder } from '../../api/orderService';
 
 const DivContactData = styled.div`
   margin: 20px auto;
@@ -17,10 +19,6 @@ const DivContactData = styled.div`
   }
 `;
 
-const Input = styled.input`
-  display: block;
-`;
-
 class ContactData extends Component {
   state = {
     name: '',
@@ -31,36 +29,44 @@ class ContactData extends Component {
     },
   }
 
-  orderHandler = (event) => {
+  orderHandler = async (event) => {
     event.preventDefault();
-    console.log(this.props.ingredients);
+    this.setState({ loading: true });
+    const { ingredients, price } = this.props;
+    try {
+      await postOrder({
+        ingredients,
+        price,
+        customer: {
+          name: '',
+          address: '',
+          email: '',
+          zipCode: '',
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          this.setState({ loading: false });
+          this.props.history.push('/');
+        });
+    } catch(err) {
+      this.setState({
+        loading: false,
+      });
+      alert(err);
+    }
   }
   
   render() {
     return (
       <DivContactData>
-        <h4>Enter your Contact Data</h4>
-        <form>
-          <Input type="text"
-            name="name"
-            placeholder="Your name"
-          />
-          <Input type="text"
-            name="email"
-            placeholder="Your email"
-          />
-          <Input type="text"
-            name="street"
-            placeholder="Street"
-          />
-          <Input type="text"
-            name="postal"
-            placeholder="Postal Code"
-          />
-          <ButtonSuccess
-            onClick = { (event) => { this.orderHandler(event) } }
-          >Order</ButtonSuccess>
-        </form>
+        {
+          this.state.loading
+            ? <Spinner/>
+            : <ContactForm
+                postOrder = { this.orderHandler }
+              />
+        }
       </DivContactData>
     );
   };
