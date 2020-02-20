@@ -21,27 +21,68 @@ const DivContactData = styled.div`
 
 class ContactData extends Component {
   state = {
-    name: '',
-    email: '',
-    address: {
-      street: '',
-      postalCode: '',
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Name',
+        },
+        value: '',
+      },
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          placeholder: 'Your Mail',
+        },
+        value: '',
+      },
+      address: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'Your Address',
+        },
+        value: '',
+      },
+      zipCode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'ZIP Code',
+        },
+        value: '',
+      },
+      delivery: {
+        elementType: 'select',
+        elementConfig: {
+          options: [
+            { display:'Mail', value: 'mail' },
+            { display:'Express', value: 'express' },
+          ],
+        },
+        value: '',
+      },
     },
-  }
+    loading: false,
+  };
 
   orderHandler = async (event) => {
     event.preventDefault();
     this.setState({ loading: true });
     const { ingredients, price } = this.props;
+    const { orderForm } = this.state;
     try {
       await postOrder({
         ingredients,
         price,
         customer: {
-          name: '',
-          address: '',
-          email: '',
-          zipCode: '',
+          name: orderForm.name.value,
+          address: orderForm.address.value,
+          email: orderForm.email.value,
+          zipCode: orderForm.zipCode.value,
+          delivery: orderForm.delivery.value,
         },
       })
         .then((res) => {
@@ -55,7 +96,20 @@ class ContactData extends Component {
       });
       alert(err);
     }
-  }
+  };
+
+  formInputHandler = (event, inputItem) => {
+    const updatedForm = { ...this.state.orderForm };
+    const updateItem = { ...updatedForm[inputItem] };
+    const { value } = event.target;
+
+    updatedForm[inputItem] = {
+      ...updateItem,
+    };
+    updatedForm[inputItem].value = value;
+
+    this.setState({ orderForm: updatedForm });
+  };
   
   render() {
     return (
@@ -64,7 +118,9 @@ class ContactData extends Component {
           this.state.loading
             ? <Spinner/>
             : <ContactForm
+                orderForm = { this.state.orderForm }
                 postOrder = { this.orderHandler }
+                changeHandler = { this.formInputHandler }
               />
         }
       </DivContactData>
