@@ -22,6 +22,7 @@ class AxiosMocker {
 
   mockPostRequest() {
     this.mockPostOrder();
+    this.mockPostLogin();
   };
 
   mockUpdateRequest() {
@@ -46,6 +47,13 @@ class AxiosMocker {
         });
         return [200];
       });
+  };
+
+  mockPostLogin() {
+    this.mock.onPost('/login').reply(200, {
+      token: 'react_burger_token',
+      id: 1,
+    });
   };
 };
 
