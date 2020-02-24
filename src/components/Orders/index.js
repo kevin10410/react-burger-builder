@@ -1,48 +1,31 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Order from '../Order/Order';
 import Spinner from '../UI/Spinner';
 
-import { getOrders } from '../../api/orderService';
+import { FETCH_ORDERS } from '../../store/actions/orders';
 
 class Orders extends Component {
-  state = {
-    orders: [],
-    loading: false,
-  };
-
-  startLoading = () => {
-    this.setState({ loading: true });
-  }
-
-  endLoading = () => {
-    this.setState({ loading: false });
-  }
 
   async componentDidMount() {
-    this.startLoading();
-    await getOrders()
-      .then(res => res.data)
-      .then(orders => {
-        this.setState({ orders });
-      })
-      .catch(err => console.log(err));
-    this.endLoading();
+    this.props.fetchOrders();
   };
 
   render() {
-    const Orders = this.state.orders
-      .map(order => (
-        <Order
-          {...order}
-          key = { order.orderId }
-        />
-      ));
+    const Orders = this.props.orders
+      && this.props.orders
+        .map(order => (
+          <Order
+            {...order}
+            key = { order.orderId }
+          />
+        ));
 
     return (
       <div>
         { 
-          this.state.loading
+          this.props.isLoading
             ? <Spinner/>
             : Orders 
         }
@@ -51,4 +34,16 @@ class Orders extends Component {
   }
 };
 
-export default Orders;
+const mapStateToProps = state => ({
+  orders: state.reducerOrders.orders,
+  isLoading: state.reducerOrders.isLoading,
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchOrders: () => dispatch(FETCH_ORDERS()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Orders);
