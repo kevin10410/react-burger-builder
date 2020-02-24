@@ -1,6 +1,7 @@
 import {
   ADD_PRICE,
   SUBSTRACT_PRICE,
+  INIT_PRICE,
 } from '../actionTypes';
 
 const initState = {
@@ -12,6 +13,8 @@ const reducerPrice = (state = initState, action) => {
   const newState = { ...state };
 
   switch (type) {
+    case INIT_PRICE:
+      return initState;
     case ADD_PRICE:
       newState.price += payload;
       return newState;

@@ -1,6 +1,7 @@
 import {
   ADD_INGREDIENT,
   SUBSTRACT_INGREDIENT,
+  INIT_INGREDIENTS,
 } from '../actionTypes';
 
 const initState = {
@@ -21,6 +22,8 @@ const reducerIngredients = (state = initState, action) => {
 };
 
   switch (type) {
+    case INIT_INGREDIENTS:
+      return initState;
     case ADD_INGREDIENT:
       newState.ingredients[payload] += 1;
       return newState;
