@@ -1,11 +1,13 @@
 import {
   SET_ORDERS,
   SET_IS_LOADING,
+  SET_IS_PURCHASED,
 } from '../actionTypes';
 
 const initState = {
   orders: [],
   isLoading: false,
+  isPurchased: false,
 };
 
 const reducerOrders = (state = initState, action) => {
@@ -21,6 +23,11 @@ const reducerOrders = (state = initState, action) => {
       return {
         ...state,
         isLoading: payload,
+      };
+    case SET_IS_PURCHASED:
+      return {
+        ...state,
+        isPurchased: payload,
       };
     default:
       return state;

@@ -13,6 +13,11 @@ export const SET_IS_LOADING = isLoading => ({
   payload: isLoading,
 });
 
+export const SET_IS_PURCHASED = isPurchased => ({
+  type: 'SET_IS_PURCHASED',
+  payload: isPurchased,
+});
+
 export const FETCH_ORDERS = () =>
   async dispatch => {
     dispatch(SET_IS_LOADING(true));
@@ -30,9 +35,12 @@ export const FETCH_ORDERS = () =>
 export const POST_ORDER = (orderInfo) =>
   async dispatch => {
     dispatch(SET_IS_LOADING(true));
+    dispatch(SET_IS_PURCHASED(false));
 
     await postOrder(orderInfo)
-      .then(res => console.log(res.data))
+      .then(() => {
+        dispatch(SET_IS_PURCHASED(true));
+      })
       .catch(err => console.log(err));
 
     dispatch(SET_IS_LOADING(false));
