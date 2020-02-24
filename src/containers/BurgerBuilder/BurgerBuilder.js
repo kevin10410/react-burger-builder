@@ -15,7 +15,6 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary';
-import Spinner from '../../components/UI/Spinner';
 
 const priceDict = {
   salad: 5,
@@ -27,7 +26,6 @@ const priceDict = {
 class BurgerBuilder extends Component {
   state = {
     purchasing: false,
-    loading: false,
   };
 
   increaseIngredientHandler = (ingredient) => {
@@ -64,16 +62,12 @@ class BurgerBuilder extends Component {
         <Modal
           cancelPurchase = { this.purchaseCancelHandler }
           show = { this.state.purchasing }>
-          {
-            this.state.loading
-              ? <Spinner/>
-              : <OrderSummary
-                  totalPrice = { this.props.price }
-                  cancelPurchase = { this.purchaseCancelHandler }
-                  continuePurchase = { this.purchaseContinueHandler }
-                  ingredients = { this.props.ingredients }
-                />
-          }
+          <OrderSummary
+            totalPrice = { this.props.price }
+            cancelPurchase = { this.purchaseCancelHandler }
+            continuePurchase = { this.purchaseContinueHandler }
+            ingredients = { this.props.ingredients }
+          />
         </Modal>
         <Burger ingredients = {this.props.ingredients}/>
         <BuildControls
