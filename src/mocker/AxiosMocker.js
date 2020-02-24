@@ -39,7 +39,13 @@ class AxiosMocker {
 
   mockPostOrder() {
     this.mock.onPost('/order')
-      .reply((config) => [200, config.data]);
+      .reply(({ data }) => {
+        mockPosts.push({
+          ...JSON.parse(data),
+          orderId: mockPosts.length + 1,
+        });
+        return [200];
+      });
   };
 };
 
