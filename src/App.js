@@ -5,6 +5,7 @@ import Wrapper from './components/Wrapper/Wrapper';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Checkout from './containers/Checkout/Checkout';
 import Order from './components/Orders';
+import Login from './containers/Login';
 
 class App extends Component {
   render() {
@@ -23,6 +24,10 @@ class App extends Component {
           <Route
             path="/orders"
             component={ Order }
+          />
+          <Route
+            path="/login"
+            component={ Login}
           />
         </Switch>
       </Wrapper>
