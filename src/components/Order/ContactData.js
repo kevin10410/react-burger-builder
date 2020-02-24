@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import Spinner from '../UI/Spinner';
 import ContactForm from './ContactForm';
-import { postOrder } from '../../api/orderService';
+import { POST_ORDER } from '../../store/actions/orders';
 
 const DivContactData = styled.div`
   margin: 20px auto;
@@ -65,37 +66,23 @@ class ContactData extends Component {
         value: '',
       },
     },
-    loading: false,
   };
 
   orderHandler = async (event) => {
     event.preventDefault();
-    this.setState({ loading: true });
     const { ingredients, price } = this.props;
     const { orderForm } = this.state;
-    try {
-      await postOrder({
-        ingredients,
-        price,
-        customer: {
-          name: orderForm.name.value,
-          address: orderForm.address.value,
-          email: orderForm.email.value,
-          zipCode: orderForm.zipCode.value,
-          delivery: orderForm.delivery.value,
-        },
-      })
-        .then((res) => {
-          console.log(res.data);
-          this.setState({ loading: false });
-          this.props.history.push('/');
-        });
-    } catch(err) {
-      this.setState({
-        loading: false,
-      });
-      alert(err);
-    }
+    this.props.postOrder({
+      ingredients,
+      price,
+      customer: {
+        name: orderForm.name.value,
+        address: orderForm.address.value,
+        email: orderForm.email.value,
+        zipCode: orderForm.zipCode.value,
+        delivery: orderForm.delivery.value,
+      },
+    });
   };
 
   formInputHandler = (event, inputItem) => {
@@ -115,7 +102,7 @@ class ContactData extends Component {
     return (
       <DivContactData>
         {
-          this.state.loading
+          this.props.isLoading
             ? <Spinner/>
             : <ContactForm
                 orderForm = { this.state.orderForm }
@@ -126,6 +113,17 @@ class ContactData extends Component {
       </DivContactData>
     );
   };
-}; 
+};
 
-export default ContactData;
+const mapStateToProps = state => ({
+  isLoading: state.reducerOrders.isLoading,
+});
+
+const mapDispatchToProps = dispatch => ({
+  postOrder: (orderInfo) => dispatch(POST_ORDER(orderInfo)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ContactData);
