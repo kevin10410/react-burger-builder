@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
 import styled from 'styled-components';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary';
@@ -20,25 +20,35 @@ class Checkout extends Component {
       .replace('./checkout/contact-data');
   };
 
+  isRedirectRequired = () => {
+    const isEmptyIngredients = Object
+      .values(this.props.ingredients)
+      .every(ingredient => ingredient === 0);
+    return isEmptyIngredients
+      || this.props.isPurchased;
+  };
+
   render() {
     return (
-      <DivCheckout>
-        <CheckoutSummary
-          checkoutContinue = { this.checkoutContinuedHandler }
-          checkoutCancel = { this.checkoutCanceledHandler }
-          ingredients = { this.props.ingredients }
-        />
-        <Route
-          path = "/checkout/contact-data"
-          render = {(routeProps) => (
-            <ContactData
-              {...routeProps}
+      this.isRedirectRequired()
+        ? <Redirect to="/"/>
+        : <DivCheckout>
+            <CheckoutSummary
+              checkoutContinue = { this.checkoutContinuedHandler }
+              checkoutCancel = { this.checkoutCanceledHandler }
               ingredients = { this.props.ingredients }
-              price = { this.props.price }
             />
-          )}
-        />
-      </DivCheckout>
+            <Route
+              path = "/checkout/contact-data"
+              render = {(routeProps) => (
+                <ContactData
+                  {...routeProps}
+                  ingredients = { this.props.ingredients }
+                  price = { this.props.price }
+                />
+              )}
+            />
+          </DivCheckout>
     )
   }
 };
@@ -46,6 +56,7 @@ class Checkout extends Component {
 const mapStateToProps = state => ({
   ingredients: state.reducerIngredients.ingredients,
   price: state.reducerPrice.price,
+  isPurchased: state.reducerOrders.isPurchased,
 });
 
 export default connect(
