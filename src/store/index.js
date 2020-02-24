@@ -4,6 +4,7 @@ import {
   combineReducers,
 } from 'redux';
 
+import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
 import reducerIngredients from './reducers/ingredients';
@@ -16,7 +17,7 @@ const reducers = combineReducers({
 
 const store = createStore(
   reducers,
-  applyMiddleware(logger),
+  applyMiddleware(logger, thunk),
 );
 
 export default store;
