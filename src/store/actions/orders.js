@@ -1,5 +1,6 @@
 import {
-  getOrders
+  getOrders,
+  postOrder,
 } from '../../api/orderService.js';
 
 export const SET_ORDERS = orders => ({
@@ -13,7 +14,7 @@ export const SET_IS_LOADING = isLoading => ({
 });
 
 export const FETCH_ORDERS = () =>
-  async (dispatch) => {
+  async dispatch => {
     dispatch(SET_IS_LOADING(true));
 
     await getOrders()
@@ -25,3 +26,15 @@ export const FETCH_ORDERS = () =>
 
     dispatch(SET_IS_LOADING(false));
 };
+
+export const POST_ORDER = (orderInfo) =>
+  async dispatch => {
+    dispatch(SET_IS_LOADING(true));
+
+    await postOrder(orderInfo)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
+
+    dispatch(SET_IS_LOADING(false));
+  };
+  
