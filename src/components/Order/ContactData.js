@@ -68,11 +68,10 @@ class ContactData extends Component {
     },
   };
 
-  orderHandler = async (event) => {
-    event.preventDefault();
+  getOrderInfo = () => {
     const { ingredients, price } = this.props;
     const { orderForm } = this.state;
-    this.props.postOrder({
+    return {
       ingredients,
       price,
       customer: {
@@ -82,7 +81,13 @@ class ContactData extends Component {
         zipCode: orderForm.zipCode.value,
         delivery: orderForm.delivery.value,
       },
-    });
+    };
+  };
+
+  orderHandler = async (event) => {
+    event.preventDefault();
+    const orderInfo = this.getOrderInfo();
+    this.props.postOrder(orderInfo);
   };
 
   formInputHandler = (event, inputItem) => {
