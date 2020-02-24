@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import {
   ADD_INGREDIENT,
   SUBSTRACT_INGREDIENT,
+  INIT_INGREDIENTS,
 } from '../../store/actions/ingredients';
 
 import {
   ADD_PRICE,
   SUBSTRACT_PRICE,
+  INIT_PRICE,
 } from '../../store/actions/price';
 
 import Burger from '../../components/Burger/Burger';
@@ -52,6 +54,11 @@ class BurgerBuilder extends Component {
     this.setState({ purchasing: false });
   };
 
+  componentDidMount() {
+    this.props.initIngredients();
+    this.props.initPrice();
+  };
+
   render() {
     const { ingredients } = this.props;
     const disabledIngredients = Object.keys(ingredients)
@@ -89,8 +96,10 @@ const mapStateToProps = state => ({
 });
 
 const mapActionsToProps = dispatch => ({
+  initIngredients: () => dispatch(INIT_INGREDIENTS()),
   addIngredient: ingredient => dispatch(ADD_INGREDIENT(ingredient)),
   substractIngredient: ingredient => dispatch(SUBSTRACT_INGREDIENT(ingredient)),
+  initPrice: () => dispatch(INIT_PRICE()),
   addPrice: price => dispatch(ADD_PRICE(price)),
   substractPrices: price => dispatch(SUBSTRACT_PRICE(price)),
 });
