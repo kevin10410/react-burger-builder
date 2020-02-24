@@ -48,7 +48,7 @@ const generateTextareaFromProps = (props) => (
 
 const generateInputFromProps = (props) => (
   <InputElement
-    type = { props.type }
+    type = { props.elementConfig.type }
     value = { props.value }
     placeholder = { props.elementConfig.placeholder }
     onChange = { (event) => props.changeHandler(event, props.id) }
