@@ -55,8 +55,12 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount() {
-    this.props.initIngredients();
-    this.props.initPrice();
+    if (this.props.isLogin) {
+      this.props.initIngredients();
+      this.props.initPrice();
+    } else {
+      this.props.history.replace('/login');
+    }
   };
 
   render() {
@@ -93,6 +97,7 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => ({
   ingredients: state.reducerIngredients.ingredients,
   price: state.reducerPrice.price,
+  isLogin: state.reducerLogin.token !== null,
 });
 
 const mapActionsToProps = dispatch => ({
