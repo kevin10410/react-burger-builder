@@ -22,17 +22,19 @@ const UlNavigationList = styled.ul`
 
 const NavigationList = (props) => (
   <UlNavigationList>
-    <NavigationItem
-      link = "/"
-    >Burger Builder</NavigationItem>
-    <NavigationItem
-      link = "/orders"
-    >Orders</NavigationItem>
     {
       props.isLogin
-        ? <NavigationItem
-            link = "/logout"
-          >Logout</NavigationItem>
+        ? <React.Fragment>
+            <NavigationItem
+              link = "/"
+            >Burger Builder</NavigationItem>
+            <NavigationItem
+              link = "/orders"
+            >Orders</NavigationItem>
+            <NavigationItem
+              link = "/logout"
+            >Logout</NavigationItem>
+          </React.Fragment>
         : <NavigationItem
             link = "/login"
           >Login</NavigationItem>
