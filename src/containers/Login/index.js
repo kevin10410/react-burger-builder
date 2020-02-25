@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { LOGIN } from '../../store/actions/login';
 import InputItem from '../../components/UI/InputItem';
@@ -61,23 +62,26 @@ class Login extends Component {
   };
 
   render() {
+    const inputItems = Object.entries(this.state.loginForm)
+      .map(([key, value]) => (
+        <InputItem
+          id = { key }
+          key = { key }
+          elementType = { value.elementType }
+          elementConfig = { value.elementConfig }
+          value = { value.value }
+          changeHandler = { this.formInputHandler }
+        />
+      ));
     return (
       this.props.isLoading
         ? <Spinner/>
         : <DivLogin>
             <form onSubmit = { (event) => this.loginHandler(event) }>
             {
-              Object.entries(this.state.loginForm)
-                .map(([key, value]) => (
-                  <InputItem
-                    id = { key }
-                    key = { key }
-                    elementType = { value.elementType }
-                    elementConfig = { value.elementConfig }
-                    value = { value.value }
-                    changeHandler = { this.formInputHandler }
-                  />
-                ))
+              this.props.isLogin
+                ? <Redirect to="/"/>
+                : inputItems
             }
             <ButtonSuccess>Login</ButtonSuccess>
             </form>
@@ -88,6 +92,7 @@ class Login extends Component {
 
 const mapStateToProps = state => ({
   isLoading: state.reducerLogin.isLoading,
+  isLogin: state.reducerLogin.token !== null,
 });
 
 const mapDispatchToProps = dispatch => ({
