@@ -1,4 +1,7 @@
 import { login } from '../../api/loginService';
+import {
+  setCookie,
+} from '../../utils/cookieUtils';
 
 const LOGIN_START = () => ({
   type: 'LOGIN_START',
@@ -20,6 +23,8 @@ export const LOGIN = loginInfo =>
     await login(loginInfo)
       .then(res => res.data)
       .then(data => {
+        setCookie('burgerId', data.id);
+        setCookie('burgerToken', data.token);
         dispatch(LOGIN_SUCCESS(data));
       })
       .catch((err) => console.log(err));
