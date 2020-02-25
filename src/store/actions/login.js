@@ -9,6 +9,10 @@ const LOGIN_SUCCESS = config => ({
   payload: config,
 });
 
+export const LOGOUT = () => ({
+  type: 'LOGOUT',
+});
+
 export const LOGIN = loginInfo =>
   async dispatch => {
     dispatch(LOGIN_START());

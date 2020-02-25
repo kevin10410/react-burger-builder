@@ -1,4 +1,5 @@
 import {
+  LOGOUT,
   LOGIN_START,
   LOGIN_SUCCESS,
 } from '../actionTypes';
@@ -13,6 +14,8 @@ const reducerLogin = (state = initState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case LOGOUT:
+      return initState;
     case LOGIN_START:
       return {
         ...state,
