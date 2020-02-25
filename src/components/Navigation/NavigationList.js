@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+
 import NavigationItem from './NavigationItem';
 
 const UlNavigationList = styled.ul`
@@ -26,7 +28,22 @@ const NavigationList = (props) => (
     <NavigationItem
       link = "/orders"
     >Orders</NavigationItem>
+    {
+      props.isLogin
+        ? <NavigationItem
+            link = "/logout"
+          >Logout</NavigationItem>
+        : <NavigationItem
+            link = "/login"
+          >Login</NavigationItem>
+    }
   </UlNavigationList>
 );
 
-export default NavigationList;
+const mapStateToProps = state => ({
+  isLogin: state.reducerLogin.token !== null,
+});
+
+export default connect(
+  mapStateToProps,
+)(NavigationList);
