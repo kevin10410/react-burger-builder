@@ -1,6 +1,7 @@
 import { login } from '../../api/loginService';
 import {
   setCookie,
+  getCookie,
 } from '../../utils/cookieUtils';
 
 const LOGIN_START = () => ({
@@ -11,6 +12,16 @@ const LOGIN_SUCCESS = config => ({
   type: 'LOGIN_SUCCESS',
   payload: config,
 });
+
+export const CHECK_TOKEN = () =>
+  dispatch => {
+    const id = getCookie('burgerId');
+    const token = getCookie('burgerToken');
+    token && id && dispatch(LOGIN_SUCCESS({
+      id,
+      token,
+    }));
+  };
 
 export const LOGOUT = () => ({
   type: 'LOGOUT',
