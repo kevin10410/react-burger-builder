@@ -19,9 +19,18 @@ const reducers = combineReducers({
   reducerLogin,
 });
 
+const isDev = () => process.env.NODE_ENV === 'development';
+
+const middlewares = [
+  thunk,
+  isDev() && logger, 
+];
+
 const store = createStore(
   reducers,
-  applyMiddleware(logger, thunk),
+  applyMiddleware(
+    ...middlewares,
+  ),
 );
 
 export default store;
