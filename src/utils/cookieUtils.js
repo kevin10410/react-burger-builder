@@ -1,5 +1,9 @@
 export const setCookie = (key, value) => {
-  document.cookie = `${key}=${value}`;
+  const duration = 600;
+  const expiredTime = new Date(Date.now() + duration * 1000)
+    .toUTCString();
+
+  document.cookie = `${key}=${value};expires=${expiredTime}`;
 };
 
 export const getCookie = (key) => {
