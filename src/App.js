@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Wrapper from './components/Wrapper/Wrapper';
@@ -17,9 +17,9 @@ class App extends Component {
   };
 
   render() {
-    return(
-      <Wrapper>
-        <Switch>
+
+    const routes = this.props.isLogin
+      ? (<>
           <Route 
             path="/"
             exact
@@ -34,24 +34,40 @@ class App extends Component {
             component={ Order }
           />
           <Route
-            path="/login"
-            component={ Login }
-          />
-          <Route
             path="/logout"
             component={ Logout }
           />
+          <Redirect to="/"/>
+        </>)
+      : (
+          <>
+            <Route
+              path="/login"
+              component={ Login }
+            />
+            <Redirect to="/login"/>
+          </>
+        )
+
+    return(
+      <Wrapper>
+        <Switch>
+          { routes }
         </Switch>
       </Wrapper>
     );
   }
 };
 
+const mapStateToProps = state => ({
+  isLogin: state.reducerLogin.token !== null,
+});
+
 const mapDispatchToProps = dispatch => ({
   checkToken: () => dispatch(CHECK_TOKEN()),
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(App);
