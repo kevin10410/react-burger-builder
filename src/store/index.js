@@ -21,10 +21,9 @@ const reducers = combineReducers({
 
 const isDev = () => process.env.NODE_ENV === 'development';
 
-const middlewares = [
-  thunk,
-  isDev() && logger, 
-];
+const middlewares = isDev()
+  ? [thunk, logger]
+  : [thunk] ;
 
 const store = createStore(
   reducers,
