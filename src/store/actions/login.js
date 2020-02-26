@@ -2,6 +2,7 @@ import { login } from '../../api/loginService';
 import {
   setCookie,
   getCookie,
+  deleteCookie,
 } from '../../utils/cookieUtils';
 
 const LOGIN_START = () => ({
@@ -23,9 +24,12 @@ export const CHECK_TOKEN = () =>
     }));
   };
 
-export const LOGOUT = () => ({
-  type: 'LOGOUT',
-});
+export const LOGOUT = () =>
+  dispatch => {
+    deleteCookie('burgerId');
+    deleteCookie('burgerToken');
+    dispatch({ type: 'LOGOUT' });
+  };
 
 export const LOGIN = loginInfo =>
   async dispatch => {
