@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/react-burger-builder/static/css/main.99c66bc2.chunk.css",
-    "main.js": "/react-burger-builder/static/js/main.c4965dbf.chunk.js",
-    "main.js.map": "/react-burger-builder/static/js/main.c4965dbf.chunk.js.map",
+    "main.js": "/react-burger-builder/static/js/main.039c7e1c.chunk.js",
+    "main.js.map": "/react-burger-builder/static/js/main.039c7e1c.chunk.js.map",
     "runtime-main.js": "/react-burger-builder/static/js/runtime-main.7df1a27d.js",
     "runtime-main.js.map": "/react-burger-builder/static/js/runtime-main.7df1a27d.js.map",
     "static/js/2.6006e50d.chunk.js": "/react-burger-builder/static/js/2.6006e50d.chunk.js",
     "static/js/2.6006e50d.chunk.js.map": "/react-burger-builder/static/js/2.6006e50d.chunk.js.map",
     "index.html": "/react-burger-builder/index.html",
-    "precache-manifest.6b628e17a1fd93d7705de5abfde0087b.js": "/react-burger-builder/precache-manifest.6b628e17a1fd93d7705de5abfde0087b.js",
+    "precache-manifest.cb79405e3c2d04fd98ef8696e079335c.js": "/react-burger-builder/precache-manifest.cb79405e3c2d04fd98ef8696e079335c.js",
     "service-worker.js": "/react-burger-builder/service-worker.js",
     "static/css/main.99c66bc2.chunk.css.map": "/react-burger-builder/static/css/main.99c66bc2.chunk.css.map",
     "static/js/2.6006e50d.chunk.js.LICENSE": "/react-burger-builder/static/js/2.6006e50d.chunk.js.LICENSE",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.7df1a27d.js",
     "static/js/2.6006e50d.chunk.js",
     "static/css/main.99c66bc2.chunk.css",
-    "static/js/main.c4965dbf.chunk.js"
+    "static/js/main.039c7e1c.chunk.js"
   ]
 }
