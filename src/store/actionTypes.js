@@ -14,3 +14,5 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const CHECK_TOKEN = 'CHECK_TOKEN';
+export const FETCH_ORDERS = 'FETCH_ORDERS';
+export const POST_ORDER = 'POST_ORDER';
