@@ -12,6 +12,10 @@ export const LOGIN_SUCCESS = config => ({
   payload: config,
 });
 
+export const LOGIN_FAIL = () => ({
+  type: 'LOGIN_FAIL',
+});
+
 export const LOGOUT = () => ({
   type: 'LOGOUT',
 });

@@ -9,6 +9,7 @@ import {
 import {
   LOGIN_START,
   LOGIN_SUCCESS,
+  LOGIN_FAIL,
   LOGOUT_SUCCESS,
 } from '../actions/login';
 
@@ -44,12 +45,11 @@ function* login(action) {
     yield put(LOGIN_SUCCESS(data));
   } catch (err) {
     console.log(err);
+    yield put(LOGIN_FAIL());
   }
-
-  yield put(LOGIN_SUCCESS());
 };
 
-export function* loginSaga() {
+export default function* loginSaga() {
   yield takeEvery(LOGOUT, logout);
   yield takeEvery(CHECK_TOKEN, checkToken);
   yield takeEvery(LOGIN, login);

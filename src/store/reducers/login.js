@@ -1,6 +1,7 @@
 import {
   LOGIN_START,
   LOGIN_SUCCESS,
+  LOGIN_FAIL,
   LOGOUT_SUCCESS,
 } from '../actionTypes';
 
@@ -26,6 +27,11 @@ const reducerLogin = (state = initState, action) => {
         ...state,
         token: payload.token,
         userId: payload.id,
+        isLoading: false,
+      };
+    case LOGIN_FAIL:
+      return {
+        ...state,
         isLoading: false,
       };
     default:
