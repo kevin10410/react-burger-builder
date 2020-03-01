@@ -6,6 +6,8 @@ import {
 
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './sagas';
 
 import reducerIngredients from './reducers/ingredients';
 import reducerPrice from './reducers/price';
@@ -19,11 +21,13 @@ const reducers = combineReducers({
   reducerLogin,
 });
 
+const sagaMiddleware = createSagaMiddleware();
+
 const isDev = () => process.env.NODE_ENV === 'development';
 
 const middlewares = isDev()
-  ? [thunk, logger]
-  : [thunk] ;
+  ? [thunk, sagaMiddleware, logger]
+  : [thunk, sagaMiddleware] ;
 
 const store = createStore(
   reducers,
@@ -31,5 +35,7 @@ const store = createStore(
     ...middlewares,
   ),
 );
+
+sagaMiddleware.run(rootSaga);
 
 export default store;
